@@ -6,6 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
 import java.util.Scanner;
 
 public class AppClienteBanco {
@@ -27,10 +28,12 @@ public class AppClienteBanco {
                     String conta = entrada.next();
                     //chamada ao método remoto, como se fosse executar localmente
                     System.out.println(banco.saldo(conta));
+                    break;
                 }
                 case 2: {
                     //chamada ao método remoto, como se fosse executar localmente
                     System.out.println(banco.quantidadeContas());
+                    break;
                 }
                 case 3: {
                     //chamada ao método remoto, como se fosse executar localmente
@@ -39,6 +42,7 @@ public class AppClienteBanco {
                     Conta conta = new Conta(numero, 0.0);
                     banco.adicionarConta(conta);
                     System.out.println("Conta criada com sucesso");
+                    break;
                 }
                 case 4: {
                     System.out.println("Digite o número para pesquisar a conta:");
@@ -49,6 +53,7 @@ public class AppClienteBanco {
                     }else{
                         System.out.println("A conta não foi encontrada");
                     }
+                    break;
                 }
 
                 case 5: {
@@ -60,18 +65,22 @@ public class AppClienteBanco {
                     }else{
                         System.out.println("A conta não foi removida por não existir");
                     }
+                    break;
                 }
                 case 6: {
-                    System.out.println("Listagem de contas:");
-                    System.out.println(banco.listarContas());
+                    System.out.println("Listagem de Contas:");
+                    List<Conta> listaContas = banco.listarContas();
+                    for (Conta conta : listaContas) {
+                        System.out.println("Número: " + conta.getNumero() + ", Saldo: " + conta.getSaldo());
+                    }
+                    break;
                 }
-
-            } 
 
             }
             menu();
             opcao = entrada.nextInt();
         }
+    }
 
     public static void menu() {
         System.out.println("\n=== BANCO RMI (ou FMI?!) ===");
